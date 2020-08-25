@@ -27,7 +27,6 @@ public class AddressDAO {
         try {
             con = getConnection();
 
-
             String sql = "insert into address values(address_seq.nextval, ?, ?, ?, ?)";
             ps = con.prepareStatement(sql); // 쿼리 실행하는 객체(문자열을 처리할때 statment객체 보다 조금더 편리)
             ps.setString(1, ad.getName());
@@ -51,16 +50,19 @@ public class AddressDAO {
 
         try {
             con = getConnection();
-            String sql = "select * from address";
+            String sql = "select * from address order by num";
             st = con.createStatement();
             rs = st.executeQuery(sql);
+
             while (rs.next()) {
                 Address ad = new Address();
+
                 ad.setAddr(rs.getString("addr"));
                 ad.setName(rs.getString("name"));
                 ad.setNum(rs.getInt("num"));
                 ad.setTel(rs.getString("tel"));
                 ad.setZipcode(rs.getString("zipcode"));
+
                 arr.add(ad);
             }
         } catch (Exception e) {
@@ -68,7 +70,83 @@ public class AddressDAO {
         } finally {
             closeConnection(con, null, st, rs);
         }
+
         return arr;
+    }
+
+    // 회원수
+    public int addrCount() {
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        try {
+            con =  getConnection();
+            String sql = "select count(*) from address order by num";
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, null, st, rs);
+        }
+
+        return count;
+    }
+
+    // 상세보기
+    public Address addrView(int num) {
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+        Address ad = null;
+
+        try {
+            con = getConnection();
+            String sql = "select * from address where num = " + num;
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                ad = new Address();
+
+                ad.setAddr(rs.getString("addr"));
+                ad.setName(rs.getString("name"));
+                ad.setNum(rs.getInt("num"));
+                ad.setTel(rs.getString("tel"));
+                ad.setZipcode(rs.getString("zipcode"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, null, st, rs);
+        }
+
+        return ad;
+    }
+//    수정
+
+    // 삭제
+    public void addrDelete(int num) {
+        Connection con = null;
+        Statement st = null;
+
+        try {
+            con = getConnection();
+            String sql = "delete from address where num=" + num;
+            st = con.createStatement();
+            st.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, null, st, null);
+        }
+
     }
 
     // 닫기 메소드
@@ -81,11 +159,10 @@ public class AddressDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
-//    수정
 
-//    삭제
 
-//    상세보기
+
+
+
 }

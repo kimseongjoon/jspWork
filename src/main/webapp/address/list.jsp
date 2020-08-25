@@ -11,12 +11,38 @@
 <html>
 <head>
     <title>Title</title>
+    <%
+        AddressDAO dao = AddressDAO.getInstance();
+        ArrayList<Address> arr = dao.addrList();
+        int count = dao.addrCount();
+    %>
 </head>
 <body>
-<%
-    AddressDAO dao = AddressDAO.getInstance();
-    ArrayList<Address> arr = dao.addrList();
-    out.println(arr.size());
-%>
+<div align="right"><a href="insert.jsp">회원추가</a></div>
+<table border="1">
+    <caption>회원목록(총 <%=count%>명)</caption>
+    <thead>
+    <tr style="background-color: aquamarine">
+        <th>번호</th>
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>주소</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+        for (int i = 0; i < arr.size(); i++) {
+    %>
+    <tr>
+        <td align="right"><%=arr.get(i).getNum()%></td>
+        <td><a href="detail.jsp?num=<%=arr.get(i).getNum()%>"><%=arr.get(i).getName()%></a></td>
+        <td align="right"><%=arr.get(i).getTel()%></td>
+        <td><%=arr.get(i).getAddr()%></td>
+    </tr>
+    <%
+        }
+    %>
+    </tbody>
+</table>
 </body>
 </html>
