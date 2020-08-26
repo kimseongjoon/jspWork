@@ -27,7 +27,7 @@ public class AddressDAO {
         try {
             con = getConnection();
 
-            String sql = "insert into address values(address_seq.nextval, ?, ?, ?, ?)";
+            String sql = "INSERT INTO ADDRESS VALUES(ADDRESS_SEQ.NEXTVAL, ?, ?, ?, ?)";
             ps = con.prepareStatement(sql); // 쿼리 실행하는 객체(문자열을 처리할때 statment객체 보다 조금더 편리)
             ps.setString(1, ad.getName());
             ps.setString(2, ad.getTel());
@@ -159,7 +159,7 @@ public class AddressDAO {
 
         try {
             con = getConnection();
-            String sql = "delete from address where num=" + num;
+            String sql = "DELETE FROM ADDRESS WHERE NUM=" + num;
             st = con.createStatement();
             st.executeUpdate(sql);
         } catch (Exception e) {
@@ -168,6 +168,41 @@ public class AddressDAO {
             closeConnection(con, null, st, null);
         }
 
+    }
+
+    // 우편번호 검색
+    public ArrayList<ZipCodeDTO> zipcodeRead(String dong) {
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+        Address ad = null;
+        ArrayList<ZipCodeDTO> zipArr = new ArrayList<>();
+
+        try {
+            con = getConnection();
+            String sql = "SELECT * FROM ZIPCODE WHERE DONG LIKE '%" + dong + "%'";
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                ZipCodeDTO zip = new ZipCodeDTO();
+
+                zip.setBunji(rs.getString("bunji"));
+                zip.setDong(rs.getString("dong"));
+                zip.setGugun(rs.getString("gugun"));
+                zip.setSeq(rs.getInt("seq"));
+                zip.setSido(rs.getString("sido"));
+                zip.setZipcode(rs.getString("zipcode"));
+
+                zipArr.add(zip);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, null, st, rs);
+        }
+
+        return zipArr;
     }
 
     // 닫기 메소드

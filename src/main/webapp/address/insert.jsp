@@ -9,6 +9,11 @@
 <html>
 <head>
     <title>Title</title>
+    <script>
+        function zipfinder() {
+            window.open("zipCheck.jsp", "", "width=700 height=400");
+        }
+    </script>
 </head>
 <body>
 <div align="right"><a href="list.jsp">전체보기</a></div>
@@ -22,11 +27,11 @@
         </tr>
         <tr>
             <td>우편번호</td>
-            <td><input type="text" name="zipcode"> <input type="button" value="검색"></td>
+            <td><input type="text" name="zipcode" id="zipcode"> <input type="button" value="검색" onclick="zipfinder()"></td>
         </tr>
         <tr>
             <td>주소</td>
-            <td><input type="text" name="addr" size="50"></td>
+            <td><input type="text" name="addr" id="addr" size="50"></td>
         </tr>
         <tr>
             <td>전화번호</td>
