@@ -42,15 +42,23 @@ public class AddressDAO {
     }
 
     // 전체보기
-    public ArrayList<Address> addrList() {
+    public ArrayList<Address> addrList(String field, String word) {
         Connection con = null;
         Statement st = null;
         ResultSet rs = null;
         ArrayList<Address> arr = new ArrayList<>();
+        String sql = "";
 
         try {
             con = getConnection();
-            String sql = "SELECT * FROM ADDRESS ORDER BY NUM";
+            if (word.equals("")) {
+                sql = "SELECT * FROM ADDRESS ORDER BY NUM";
+            } else {
+                sql = "SELECT * FROM ADDRESS WHERE " + field + " LIKE '%" + word + "%' ORDER BY NUM";
+            }
+
+            System.out.println("addrList -> " + sql);
+
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
@@ -75,15 +83,24 @@ public class AddressDAO {
     }
 
     // 회원수
-    public int addrCount() {
+    public int addrCount(String field, String word) {
         Connection con = null;
         Statement st = null;
         ResultSet rs = null;
+        String sql = "";
         int count = 0;
 
         try {
             con = getConnection();
-            String sql = "SELECT count(*) FROM ADDRESS ORDER BY NUM";
+
+            if (word.equals("")) {
+                sql = "SELECT count(*) FROM ADDRESS ORDER BY NUM";
+            } else {
+                sql = "SELECT count(*) FROM ADDRESS WHERE " + field + " LIKE '%" + word + "%' ORDER BY NUM";
+            }
+
+            System.out.println("addrCount -> " + sql);
+
             st = con.createStatement();
             rs = st.executeQuery(sql);
 

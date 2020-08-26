@@ -65,9 +65,7 @@
         </tr>
 
         <%
-        } else {
-
-
+            } else {
         %>
 
         <tr>
@@ -75,12 +73,12 @@
         </tr>
 
         <%
-                for (ZipCodeDTO z : zipArr) {
-                    String zip = z.getZipcode();
-                    String sido = z.getSido();
-                    String bunji = z.getBunji();
-                    String gugun = z.getGugun();
-                    String d = z.getDong();
+            for (ZipCodeDTO z : zipArr) {
+                String zip = z.getZipcode();
+                String sido = z.getSido();
+                String bunji = z.getBunji();
+                String gugun = z.getGugun();
+                String d = z.getDong();
         %>
         <tr>
             <td>
