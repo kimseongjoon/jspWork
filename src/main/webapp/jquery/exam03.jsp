@@ -14,34 +14,39 @@
 <script>
     $(document).ready(function () { //get ==>가져오는 기능 text(), val(), html()/ set ==> 변경 text(???), val(???)
         $("#getBtn").click(function () { // $("#id").val() input type="text" 태그 값을 가져올 때 val함수 사용 $("#id").text()는 document의 문자를 가져올때 사용
-            $.get("process.jsp", {"id" : $("#id").val(), "pwd" : $("#pwd").val(), "method" : "get"}, function (data) { // get함수 처리결과가 data로 전달되고 function(data)내에서 처리한다.
-                $("#result").html(data); //html태그를 사용할때 사용
-            }); // get
+            $.get("process.jsp", {"id": $("#id").val(), "pwd": $("#pwd").val(), "method": "get"})
+                .done(function (data) { // get함수 처리결과가 data로 전달되고 function(data)내에서 처리한다.
+                        $("#result").html(data); //html태그를 사용할때 사용
+                    }
+                ) // get
         }); // getBtn
 
 
         $("#postBtn").on("click", function () {
-            $.post("process.jsp", {"id" : $("#id").val(), "pwd" : $("#pwd").val(), "method" : "post"}, function (data) { // get함수 처리결과가 data로 전달되고 function(data)내에서 처리한다.
+            var test = $.post("process.jsp", {"id": $("#id").val(), "pwd": $("#pwd").val(), "method": "post"});
+
+            test.done(function (data) { // get함수 처리결과가 data로 전달되고 function(data)내에서 처리한다.
                 $("#result").html(data); //html태그를 사용할때 사용
-            });
+            })
         })
 
         $("#loadBtn").on("click", function () {
-            $("#result").load("process.jsp", {"id" : $("#id").val(), "pwd" : $("#pwd").val(), "method" : "load"});
+            $("#result").load("process.jsp", {"id": $("#id").val(), "pwd": $("#pwd").val(), "method": "load"});
         });
 
         $("#ajaxBtn").on("click", function () {
             $.ajax({
-                type : "get",
-                url : "process.jsp",
-                data : {"id" : $("#id").val(), "pwd" : $("#pwd").val(), "method" : "ajax"},
-                success:function (resp) {
+                method: "get",
+                // type: "get",
+                url: "process.jsp",
+                data: {"id": $("#id").val(), "pwd": $("#pwd").val(), "method": "ajax"}
+            }).done(function (resp) {
                     $("#result").html(resp);
-                },
-                error:function (e) {
+                }
+            ).fail(function (e) {
                     alert("error:" + e);
                 }
-            })
+            )
         })
     }); // document
 </script>
