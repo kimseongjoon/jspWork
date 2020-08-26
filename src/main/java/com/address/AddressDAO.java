@@ -50,7 +50,7 @@ public class AddressDAO {
 
         try {
             con = getConnection();
-            String sql = "select * from address order by num";
+            String sql = "SELECT * FROM ADDRESS ORDER BY NUM";
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
@@ -82,8 +82,8 @@ public class AddressDAO {
         int count = 0;
 
         try {
-            con =  getConnection();
-            String sql = "select count(*) from address order by num";
+            con = getConnection();
+            String sql = "SELECT count(*) FROM ADDRESS ORDER BY NUM";
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
@@ -108,7 +108,7 @@ public class AddressDAO {
 
         try {
             con = getConnection();
-            String sql = "select * from address where num = " + num;
+            String sql = "SELECT * FROM ADDRESS WHERE NUM = " + num;
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
@@ -129,7 +129,28 @@ public class AddressDAO {
 
         return ad;
     }
-//    수정
+
+    // 수정
+    public void addrUpdate(Address ad) {
+        Connection con = null; // 디비 연결하는 객체
+        PreparedStatement ps = null;
+        try {
+            con = getConnection();
+
+            String sql = "UPDATE ADDRESS SET NAME=?, TEL=?, ZIPCODE=?, ADDR=? WHERE NUM=?";
+            ps = con.prepareStatement(sql); // 쿼리 실행하는 객체(문자열을 처리할때 statment객체 보다 조금더 편리)
+            ps.setString(1, ad.getName());
+            ps.setString(2, ad.getTel());
+            ps.setString(3, ad.getZipcode());
+            ps.setString(4, ad.getAddr());
+            ps.setInt(5, ad.getNum());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, ps, null, null);
+        }
+    }
 
     // 삭제
     public void addrDelete(int num) {
@@ -160,9 +181,4 @@ public class AddressDAO {
             throwables.printStackTrace();
         }
     }
-
-
-
-
-
 }

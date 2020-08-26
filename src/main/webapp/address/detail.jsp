@@ -25,7 +25,8 @@
     </script>
 </head>
 <body>
-<form>
+<form action="updatePro.jsp" method="post">
+    <input type="hidden" name="num" value="<%=num%>">
     <table>
         <tr>
             <th>이름</th>

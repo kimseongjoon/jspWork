@@ -6,3 +6,9 @@ out/
 .idea/sonarlint/
 
 .gradle/
+
+.idea/vcs.xml
+
+.idea/dataSources/
+
+.idea/
