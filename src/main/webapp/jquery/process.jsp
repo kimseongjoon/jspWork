@@ -16,6 +16,6 @@
     str += "id : " + id + "<br>";
     str += "pwd : " + pwd + "<br>";
     str += "method : " + method + "<br>";
-    out.println(str);
 
+    out.println(str);
 %>

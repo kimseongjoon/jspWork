@@ -11,11 +11,11 @@
 <html>
 <head>
     <title>Title</title>
-    <style>
+    <%--<style>
         a:link {text-decoration: none; color: #000}
         a:hover {text-decoration: none; color: #000}
         a:visited {text-decoration: none; color: #000}
-    </style>
+    </style>--%>
     <%
         request.setCharacterEncoding("utf-8");
         String dong = request.getParameter("dong");

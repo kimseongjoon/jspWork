@@ -192,7 +192,6 @@ public class AddressDAO {
         Connection con = null;
         Statement st = null;
         ResultSet rs = null;
-        Address ad = null;
         ArrayList<ZipCodeDTO> zipArr = new ArrayList<>();
 
         try {
@@ -223,7 +222,7 @@ public class AddressDAO {
     }
 
     // 닫기 메소드
-    private void closeConnection(Connection con, PreparedStatement ps, Statement st, ResultSet rs) {
+    private void closeConnection(Connection con, Statement ps, Statement st, ResultSet rs) {
         try {
             if (rs != null) rs.close();
             if (st != null) st.close();
